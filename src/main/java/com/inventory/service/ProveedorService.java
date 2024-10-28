@@ -66,4 +66,9 @@ public class ProveedorService implements IProveedorService {
 		proveedorEntity.setEmailProveedor(proveedor.emailProveedor());
 		return proveedorRepository.save(proveedorEntity);
 	}
+	
+	//Total proveedores
+	public long countProveedores() {
+        return proveedorRepository.count();
+    }
 }

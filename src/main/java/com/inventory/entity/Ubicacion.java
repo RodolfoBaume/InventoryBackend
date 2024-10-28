@@ -16,17 +16,22 @@ public class Ubicacion {
 	private long idUbicacion;
 	private String nombreUbicacion;
 	private String direccionUbicacion;
+	private String telefono;
+	private String responsable;
 	
 	
 	public Ubicacion() {
 		super();
 	}
 
-	public Ubicacion(long idUbicacion, String nombreUbicacion, String direccionUbicacion) {
+	public Ubicacion(long idUbicacion, String nombreUbicacion, String direccionUbicacion, String telefono,
+			String responsable) {
 		super();
 		this.idUbicacion = idUbicacion;
 		this.nombreUbicacion = nombreUbicacion;
 		this.direccionUbicacion = direccionUbicacion;
+		this.telefono = telefono;
+		this.responsable = responsable;
 	}
 
 	public long getIdUbicacion() {
@@ -51,6 +56,22 @@ public class Ubicacion {
 
 	public void setDireccionUbicacion(String direccionUbicacion) {
 		this.direccionUbicacion = direccionUbicacion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getResponsable() {
+		return responsable;
+	}
+
+	public void setResponsable(String responsable) {
+		this.responsable = responsable;
 	}
 	
 }

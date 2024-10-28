@@ -1,24 +1,24 @@
 package com.inventory.service;
 
 import java.util.List;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.Optional;
 
 import com.inventory.dto.CategoriaDto;
-import com.inventory.entity.Categoria;
+import com.inventory.projection.CategoriaProductoDTO;
 
 public interface ICategoriaService {
 
-	List<Categoria> findAll();
+	List<CategoriaDto> obtenerCategoriasEnArbol();
 	
-	Page<Categoria> findAllPage(Pageable pageable);
+	CategoriaDto obtenerCategoriaPorId(Long id);
 	
-	Categoria findById(Long idCategoria);
+	CategoriaDto crearCategoria(CategoriaDto categoriaDto);
 	
-	Categoria createCategoria(CategoriaDto categoria);
+	CategoriaDto actualizarCategoria(Long id, CategoriaDto categoriaDto);
 	
-	Categoria deleteCategoria(Long idCategoria);
+	void eliminarCategoria(Long id);
 	
-	Categoria updateCategoria(Long idCategoria, CategoriaDto categoria);
+	List<CategoriaProductoDTO> obtenerCategoriasConProductos();
+	
+	Optional<CategoriaProductoDTO> obtenerCategoriaConProductosPorId(Long idCategoria);
 }

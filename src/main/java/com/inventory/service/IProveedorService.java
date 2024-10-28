@@ -20,4 +20,6 @@ public interface IProveedorService {
 	Proveedor deleteProveedor(Long idProveedor);
 	
 	Proveedor updateProveedor(Long idProveedor, ProveedorDto proveedor);
+	
+	long countProveedores();
 }

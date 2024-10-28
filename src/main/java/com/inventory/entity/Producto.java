@@ -23,10 +23,18 @@ public class Producto {
 	private String nombreProducto;
 	private String descripcionProducto;
 	private double precio;
-	private double costo;
+	private int cantidad;
 	private Date fecha_creacion;
 	private Date fecha_actualizacion;
+	private int minimo;
+	private int maximo;
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "unidadMedidaId")
+	private UnidadMedida unidadMedida;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "marcaId")
+	private Marca marca;
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "categoriaId")
 	private Categoria categoria;
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -40,16 +48,19 @@ public class Producto {
 	}
 
 	public Producto(long idProducto, String sku, String nombreProducto, String descripcionProducto, double precio,
-			double costo, Date fecha_creacion, Date fecha_actualizacion, Categoria categoria, Proveedor proveedor) {
+			int cantidad, Date fecha_creacion, Date fecha_actualizacion, int minimo, int maximo, Categoria categoria,
+			Proveedor proveedor) {
 		super();
 		this.idProducto = idProducto;
 		this.sku = sku;
 		this.nombreProducto = nombreProducto;
 		this.descripcionProducto = descripcionProducto;
 		this.precio = precio;
-		this.costo = costo;
+		this.cantidad = cantidad;
 		this.fecha_creacion = fecha_creacion;
 		this.fecha_actualizacion = fecha_actualizacion;
+		this.minimo = minimo;
+		this.maximo = maximo;
 		this.categoria = categoria;
 		this.proveedor = proveedor;
 	}
@@ -94,12 +105,12 @@ public class Producto {
 		this.precio = precio;
 	}
 
-	public double getCosto() {
-		return costo;
+	public int getCantidad() {
+		return cantidad;
 	}
 
-	public void setCosto(double costo) {
-		this.costo = costo;
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	public Date getFecha_creacion() {
@@ -118,6 +129,38 @@ public class Producto {
 		this.fecha_actualizacion = fecha_actualizacion;
 	}
 
+	public int getMinimo() {
+		return minimo;
+	}
+
+	public void setMinimo(int minimo) {
+		this.minimo = minimo;
+	}
+
+	public int getMaximo() {
+		return maximo;
+	}
+
+	public void setMaximo(int maximo) {
+		this.maximo = maximo;
+	}
+
+	public UnidadMedida getUnidadMedida() {
+		return unidadMedida;
+	}
+
+	public void setUnidadMedida(UnidadMedida unidadMedida) {
+		this.unidadMedida = unidadMedida;
+	}
+
+	public Marca getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Marca marca) {
+		this.marca = marca;
+	}
+
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -133,5 +176,5 @@ public class Producto {
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
 	}
-	
+
 }

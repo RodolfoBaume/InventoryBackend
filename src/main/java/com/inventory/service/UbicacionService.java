@@ -44,6 +44,8 @@ public class UbicacionService implements IUbicacionService {
 		Ubicacion ubicacionEntity = new Ubicacion();
 		ubicacionEntity.setNombreUbicacion(ubicacion.nombreUbicacion());
 		ubicacionEntity.setDireccionUbicacion(ubicacion.direccionUbicacion());
+		ubicacionEntity.setTelefono(ubicacion.telefono());
+		ubicacionEntity.setResponsable(ubicacion.responsable());
 		return ubicacionRepository.save(ubicacionEntity);
 	}
 
@@ -60,6 +62,14 @@ public class UbicacionService implements IUbicacionService {
 				.orElseThrow(() -> new NoSuchElementException("Ubicacion no encontrada con el ID: " + idUbicacion));
 		ubicacionEntity.setNombreUbicacion(ubicacion.nombreUbicacion());
 		ubicacionEntity.setDireccionUbicacion(ubicacion.direccionUbicacion());
+		ubicacionEntity.setTelefono(ubicacion.telefono());
+		ubicacionEntity.setResponsable(ubicacion.responsable());
 		return ubicacionRepository.save(ubicacionEntity);
 	}
+	
+	// total de ubicaciones
+	public long countUbicaciones() {
+        return ubicacionRepository.count();
+    }
+
 }

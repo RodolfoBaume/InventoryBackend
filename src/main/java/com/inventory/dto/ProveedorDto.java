@@ -7,9 +7,10 @@ public record ProveedorDto(
 		String nombreProveedor,
 		String direccionProveedor,
 		String telefonoProveedor,
-		String emailProveedor
+		String emailProveedor,
+		boolean deleted
 		) {
 	public ProveedorDto(Proveedor proveedor) {
-		this(proveedor.getIdProveedor(), proveedor.getNombreProveedor(), proveedor.getDireccionProveedor(), proveedor.getTelefonoProveedor(), proveedor.getEmailProveedor());
+		this(proveedor.getIdProveedor(), proveedor.getNombreProveedor(), proveedor.getDireccionProveedor(), proveedor.getTelefonoProveedor(), proveedor.getEmailProveedor(), proveedor.isDeleted());
 	}
 }

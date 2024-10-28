@@ -22,4 +22,5 @@ public interface IUbicacionService {
 	
 	Ubicacion updateUbicacion(Long idUbicacion, UbicacionDto ubicacion);
 	
+	long countUbicaciones();
 }

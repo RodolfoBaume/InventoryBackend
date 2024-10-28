@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.inventory.controller"},{"l":"com.inventory.demo"},{"l":"com.inventory.dto"},{"l":"com.inventory.entity"},{"l":"com.inventory.repository"},{"l":"com.inventory.security"},{"l":"com.inventory.service"}];updateSearchResults();

@@ -13,6 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration // Le indica al contenedor de spring que esta es una clase de seguridad al
@@ -55,101 +59,31 @@ public class SecurityConfig {
 	// según los roles de los usuarios para acceder a nuestra aplicación.
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.csrf(csrf -> csrf.disable()).exceptionHandling(handling -> handling // Permitimos el manejo de excepciones
-				.authenticationEntryPoint(jwtAuthenticationEntryPoint)).sessionManagement(management -> management // Permite
-																													// la
-																													// gestión
-																													// de
-																													// sessiones
-						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(requests -> requests // Toda petición http debe ser autorizada
-						.requestMatchers("/api/auth/**").permitAll().requestMatchers("/api/**").permitAll()
-						/*
-						 * // CLIENTES .requestMatchers(HttpMethod.GET,
-						 * "/api/clientes/**").hasAnyAuthority("ADMIN", "CLIENTE")
-						 * .requestMatchers(HttpMethod.POST, "/api/clientes/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.PUT, "/api/clientes/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.DELETE, "/api/clientes/**").hasAuthority("ADMIN")
-						 * 
-						 * // DEPARTAMENTOS .requestMatchers(HttpMethod.GET,
-						 * "/api/departamentos/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.POST,
-						 * "/api/departamentos/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.PUT,
-						 * "/api/departamentos/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.DELETE,
-						 * "/api/departamentos/**").hasAuthority("ADMIN")
-						 * 
-						 * // EMPLEADOS .requestMatchers(HttpMethod.GET,
-						 * "/api/empleados/**").hasAuthority("ADMIN") .requestMatchers(HttpMethod.POST,
-						 * "/api/empleados/**").hasAuthority("ADMIN") .requestMatchers(HttpMethod.PUT,
-						 * "/api/empleados/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.DELETE,
-						 * "/api/empleados/**").hasAuthority("ADMIN")
-						 * 
-						 * // ESTATUS SERVICIO .requestMatchers(HttpMethod.GET,
-						 * "/api/estatusServicios/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.POST,
-						 * "/api/estatusServicios/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.PUT,
-						 * "/api/estatusServicios/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.DELETE,
-						 * "/api/estatusServicios/**").hasAuthority("ADMIN")
-						 * 
-						 * // MARCAS .requestMatchers(HttpMethod.GET,
-						 * "/api/marcas/**").hasAuthority("ADMIN") .requestMatchers(HttpMethod.POST,
-						 * "/api/marcas/**").hasAuthority("ADMIN") .requestMatchers(HttpMethod.PUT,
-						 * "/api/marcas/**").hasAuthority("ADMIN") .requestMatchers(HttpMethod.DELETE,
-						 * "/api/marcas/**").hasAuthority("ADMIN")
-						 * 
-						 * // MODELOS .requestMatchers(HttpMethod.GET,
-						 * "/api/modelos/**").hasAuthority("ADMIN") .requestMatchers(HttpMethod.POST,
-						 * "/api/modelos/**").hasAuthority("ADMIN") .requestMatchers(HttpMethod.PUT,
-						 * "/api/modelos/**").hasAuthority("ADMIN") .requestMatchers(HttpMethod.DELETE,
-						 * "/api/modelos/**").hasAuthority("ADMIN")
-						 * 
-						 * // ORDEN SERVICIO .requestMatchers(HttpMethod.GET,
-						 * "/api/ordenesServicio/**").hasAnyAuthority("ADMIN", "CLIENTE")
-						 * .requestMatchers(HttpMethod.POST,
-						 * "/api/ordenesServicio/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.PUT,
-						 * "/api/ordenesServicio/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.DELETE,
-						 * "/api/ordenesServicio/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.OPTIONS).permitAll()
-						 * 
-						 * // TIPO MOTOR .requestMatchers(HttpMethod.GET,
-						 * "/api/tiposMotor/**").hasAuthority("ADMIN") .requestMatchers(HttpMethod.POST,
-						 * "/api/tiposMotor/**").hasAuthority("ADMIN") .requestMatchers(HttpMethod.PUT,
-						 * "/api/tiposMotor/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.DELETE,
-						 * "/api/tiposMotor/**").hasAuthority("ADMIN")
-						 * 
-						 * // VEHICULO .requestMatchers(HttpMethod.GET,
-						 * "/api/vehiculos/**").hasAnyAuthority("ADMIN", "CLIENTE")
-						 * .requestMatchers(HttpMethod.POST, "/api/vehiculos/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.PUT, "/api/vehiculos/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.DELETE,
-						 * "/api/vehiculos/**").hasAuthority("ADMIN")
-						 * .requestMatchers(HttpMethod.OPTIONS).permitAll()
-						 * 
-						 * //swagger
-						 * .requestMatchers("/api-docs").permitAll().requestMatchers("/swagger-ui/**").
-						 * permitAll() .requestMatchers("/api-docs/swagger-config").permitAll()
-						 * .requestMatchers("/swagger-ui.html").permitAll()
-						 */
+	    http
+	        .cors(withDefaults())  // Activa la configuración de CORS
+	        .csrf(csrf -> csrf.disable())
+	        .exceptionHandling(handling -> handling.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+	        .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+	        .authorizeHttpRequests(requests -> requests
+	            .requestMatchers("/api/auth/**").permitAll()
+	            .requestMatchers("/api/**").permitAll()
+	            .anyRequest().authenticated())
+	        .httpBasic(withDefaults());
 
-						.anyRequest().authenticated())
-				.httpBasic(withDefaults());
-		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-		return http.build();
+	    http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+	    return http.build();
 	}
 
-	/*
-	 * 
-	 * 
-	 * 
-	 * .requestMatchers(HttpMethod.OPTIONS).permitAll()
-	 */
-
+	
+	@Bean
+	public CorsFilter corsFilter() {
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    CorsConfiguration config = new CorsConfiguration();
+	    config.setAllowCredentials(true);
+	    config.addAllowedOrigin("http://localhost:4200");  // Permitir el origen de Angular
+	    config.addAllowedHeader("*");  // Permitir todas las cabeceras
+	    config.addAllowedMethod("*");  // Permitir todos los métodos (GET, POST, etc.)
+	    source.registerCorsConfiguration("/api/**", config);  // Aplica a todas las rutas que empiezan con /api/
+	    return new CorsFilter(source);
+	}
 }

@@ -3,7 +3,11 @@ package com.inventory.entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
+/**
+ * @author RBaume
+ * Representa el Detalle de una Orden de Compra en el sistema de inventario.
+ * Esta entidad contiene la información principal del Detalle de la Orden de Compra.
+ */
 public class DetalleOrdenCompra {
 	private long idDetalleOrdenCompra;
 	private int cantidad;
