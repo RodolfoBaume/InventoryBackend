@@ -84,16 +84,28 @@ public class MarcaController {
      * 
      * @param id ID de la marca a eliminar.
      * @return mensaje de éxito o error.
-     */
+     */  
     @DeleteMapping("/marcas/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        Marca deletedMarca = marcaService.deleteMarca(id);
-        if (deletedMarca == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Error: La marca no existe.");
-        }
-        return ResponseEntity.ok("Marca eliminada con éxito.");
-    }
+	public ResponseEntity<?> delete(@PathVariable Long id) {
+
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			Marca marcaDelete = this.marcaService.findById(id);
+			if (marcaDelete == null) {
+				response.put("mensaje", "Error al eliminar. La marca no existe en base de datos");
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
+			marcaService.deleteMarca(id);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al eliminar en base de datos");
+			response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "Marca eliminada con éxito");
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+	}
 
     /**
      * Crea una nueva marca.
