@@ -3,6 +3,7 @@ com.inventory.controller
 com.inventory.demo
 com.inventory.dto
 com.inventory.entity
+com.inventory.projection
 com.inventory.repository
 com.inventory.security
 com.inventory.service

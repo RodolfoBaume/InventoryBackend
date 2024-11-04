@@ -8,9 +8,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 /**
- * @author RBaume
  * Representa un almacén en el sistema de inventario.
  * Esta entidad contiene la información principal del almacén, como su nombre, dirección, teléfono y responsable.
+ * @author RBaume
  */
 @Entity
 @Table(name = "almacenes")

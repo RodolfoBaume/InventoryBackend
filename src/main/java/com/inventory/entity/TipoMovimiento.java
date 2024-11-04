@@ -15,7 +15,7 @@ public class TipoMovimiento {
 	@Column(name = "id_tipo_movimiento")
 	private long idTipoMovimiento;
 	private String tipoMovimiento;
-
+	
 	public TipoMovimiento() {
 		super();
 	}

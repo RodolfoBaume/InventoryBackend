@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="movimientos")
-public class Movimientos {
+public class Movimiento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_movimiento")
@@ -34,11 +34,11 @@ public class Movimientos {
     @JoinColumn(name = "usuarioId")
 	private Usuario usuario;
 
-	public Movimientos() {
+	public Movimiento() {
 		super();
 	}
 
-	public Movimientos(long id_movimiento, Date fechaMovimiento, Producto producto, TipoMovimiento tipoMovimiento,
+	public Movimiento(long id_movimiento, Date fechaMovimiento, Producto producto, TipoMovimiento tipoMovimiento,
 			int cantidad, Ubicacion ubicacion, Usuario usuario) {
 		super();
 		this.id_movimiento = id_movimiento;
