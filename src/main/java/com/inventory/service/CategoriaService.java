@@ -141,7 +141,7 @@ public class CategoriaService implements ICategoriaService{
         }
     }
     
-    
+    /*
     //
     public List<CategoriaProductoDTO> obtenerCategoriasConProductos() {
         List<Categoria> categorias = categoriaRepository.obtenerCategoriasConProductos();
@@ -167,7 +167,9 @@ public class CategoriaService implements ICategoriaService{
         ).collect(Collectors.toList());
     }
     
+    */
     
+  /*  
     //Consulta por id categoria
     public Optional<CategoriaProductoDTO> obtenerCategoriaConProductosPorId(Long idCategoria) {
         return categoriaRepository.obtenerCategoriaConProductosPorId(idCategoria)
@@ -188,6 +190,21 @@ public class CategoriaService implements ICategoriaService{
                     ))
                     .collect(Collectors.toList())
             ));
-    }            
+    }  
+    
+              */
+    
+    public List<Categoria> obtenerTodasLasCategoriasConProductos() {
+        return categoriaRepository.obtenerCategoriasConProductos();
+    }
+
+    /*
+    public Optional<Categoria> obtenerCategoriaConProductosPorId(Long idCategoria) {
+        return categoriaRepository.obtenerCategoriaConProductosPorId(idCategoria);
+    }
+
+	*/
+
+
     
 }

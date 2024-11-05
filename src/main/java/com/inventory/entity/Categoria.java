@@ -50,12 +50,10 @@ public class Categoria {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Categoria> subcategorias = new ArrayList<>();
 
-    /**
-     * Lista de productos asociados a esta categoría.
-     */
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Producto> productos = new ArrayList<>();
-
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
+    private List<TipoProducto> tiposProducto;
+    
+    
     /**
      * Constructor vacío necesario para JPA.
      */
@@ -72,10 +70,9 @@ public class Categoria {
      * @param folder Indicador si es una carpeta para subcategorías
      * @param parent Nodo padre en el árbol de categorías
      * @param subcategorias Lista de subcategorías
-     * @param productos Lista de productos por categoría
      */
     public Categoria(long idCategoria, String nombreCategoria, String descripcionCategoria, Boolean folder,
-                     Categoria parent, List<Categoria> subcategorias, List<Producto> productos) {
+                     Categoria parent, List<Categoria> subcategorias) {
         super();
         this.idCategoria = idCategoria;
         this.nombreCategoria = nombreCategoria;
@@ -83,7 +80,6 @@ public class Categoria {
         this.folder = folder;
         this.parent = parent;
         this.subcategorias = subcategorias;
-        this.productos = productos;
     }
 
     /**
@@ -194,21 +190,4 @@ public class Categoria {
         this.subcategorias = subcategorias;
     }
 
-    /**
-     * Obtiene la lista de productos asociados a la categoría.
-     *
-     * @return lista de productos
-     */
-    public List<Producto> getProductos() {
-        return productos;
-    }
-
-    /**
-     * Asigna la lista de productos asociados a la categoría.
-     *
-     * @param productos lista de productos
-     */
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
-    }
 }

@@ -77,7 +77,6 @@ public class ProductoService implements IProductoService{
 		productoEntity.setUnidadMedida(producto.unidadMedida());
 		productoEntity.setMarca(producto.marca());
 		productoEntity.setTipoProducto(producto.tipoProducto());
-		productoEntity.setCategoria(producto.categoria());
 		productoEntity.setProveedor(producto.proveedor());
 		return productoRepository.save(productoEntity);
 	}
@@ -115,7 +114,6 @@ public class ProductoService implements IProductoService{
 		productoEntity.setUnidadMedida(producto.unidadMedida());
 		productoEntity.setMarca(producto.marca());
 		productoEntity.setTipoProducto(producto.tipoProducto());
-		productoEntity.setCategoria(producto.categoria());
 		productoEntity.setProveedor(producto.proveedor());
 		return productoRepository.save(productoEntity);
 	}

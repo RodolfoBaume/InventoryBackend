@@ -60,17 +60,20 @@ public class CategoriaController {
         categoriaService.eliminarCategoria(id);
     }
     
+    /*
     @GetMapping("/categorias/productos")
     public ResponseEntity<List<CategoriaProductoDTO>> obtenerCategoriasConProductos() {
         List<CategoriaProductoDTO> categoriasConProductos = categoriaService.obtenerCategoriasConProductos();
         return ResponseEntity.ok(categoriasConProductos);
     }
+    */
     
+    /*
     @GetMapping("/categorias/{idCategoria}/productos")
     public ResponseEntity<CategoriaProductoDTO> obtenerCategoriaConProductosPorId(@PathVariable Long idCategoria) {
         return categoriaService.obtenerCategoriaConProductosPorId(idCategoria)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
     }
-
+*/
 }

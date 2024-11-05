@@ -15,17 +15,20 @@ public class UnidadMedida {
 	@Column(name = "id_unidad_medida")
 	private long idUnidadMedida;
 	private String unidadMedida;
+	private String simbolo;
+	
 	
 	public UnidadMedida() {
 		super();
 	}
 
-
-	public UnidadMedida(long idUnidadMedida, String unidadMedida) {
+	public UnidadMedida(long idUnidadMedida, String unidadMedida, String simbolo) {
 		super();
 		this.idUnidadMedida = idUnidadMedida;
 		this.unidadMedida = unidadMedida;
+		this.simbolo = simbolo;
 	}
+
 
 	public long getIdUnidadMedida() {
 		return idUnidadMedida;
@@ -42,5 +45,14 @@ public class UnidadMedida {
 	public void setUnidadMedida(String unidadMedida) {
 		this.unidadMedida = unidadMedida;
 	}
+
+	public String getSimbolo() {
+		return simbolo;
+	}
+
+	public void setSimbolo(String simbolo) {
+		this.simbolo = simbolo;
+	}
+	
 	
 }

@@ -5,10 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="tipoProducto")
+@Table(name="tiposProducto")
 public class TipoProducto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,15 +19,20 @@ public class TipoProducto {
 	private String tipoProducto;
 	private Boolean status;
 	
+	@ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+	
 	public TipoProducto() {
 		super();
 	}
 
-	public TipoProducto(long idTipoProducto, String tipoProducto, Boolean status) {
+	public TipoProducto(long idTipoProducto, String tipoProducto, Boolean status, Categoria categoria) {
 		super();
 		this.idTipoProducto = idTipoProducto;
 		this.tipoProducto = tipoProducto;
 		this.status = status;
+		this.categoria = categoria;
 	}
 
 	public long getIdTipoProducto() {
@@ -50,6 +57,18 @@ public class TipoProducto {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public Boolean getStatus() {
+		return status;
 	}
 	
 }

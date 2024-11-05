@@ -16,7 +16,7 @@ import com.inventory.entity.TipoProducto;
 import com.inventory.repository.ITipoProductoRepository;
 
 @Service
-public class TipoProductoService {
+public class TipoProductoService implements ITipoProductoService{
 
 	@Autowired
 	private ITipoProductoRepository tipoProductoRepository;

@@ -51,10 +51,6 @@ public class Producto {
     @JoinColumn(name = "tipoProductoId")
     private TipoProducto tipoProducto;
     
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoriaId")
-    private Categoria categoria;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "proveedorId")
     private Proveedor proveedor;
@@ -80,7 +76,6 @@ public class Producto {
      * @param minimo Mínimo permitido en inventario
      * @param maximo Máximo permitido en inventario
      * @param tipoProductoId Tipo de Producto
-     * @param categoria Categoría a la que pertenece el producto
      * @param proveedor Proveedor del producto
      */
     
@@ -98,8 +93,7 @@ public class Producto {
 
     public Producto(long idProducto, String sku, String nombreProducto, String descripcionProducto, double precio,
 			int cantidad, Date fecha_creacion, Date fecha_actualizacion, int minimo, int maximo,
-			UnidadMedida unidadMedida, Marca marca, TipoProducto tipoProducto, Categoria categoria,
-			Proveedor proveedor) {
+			UnidadMedida unidadMedida, Marca marca, TipoProducto tipoProducto, 	Proveedor proveedor) {
 		super();
 		this.idProducto = idProducto;
 		this.sku = sku;
@@ -114,7 +108,6 @@ public class Producto {
 		this.unidadMedida = unidadMedida;
 		this.marca = marca;
 		this.tipoProducto = tipoProducto;
-		this.categoria = categoria;
 		this.proveedor = proveedor;
 	}
 
@@ -343,24 +336,6 @@ public class Producto {
 	public void setTipoProducto(TipoProducto tipoProducto) {
 		this.tipoProducto = tipoProducto;
 	}
-
-	/**
-     * Obtiene la categoría a la que pertenece el producto.
-     *
-     * @return categoría del producto
-     */
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    /**
-     * Asigna la categoría a la que pertenece el producto.
-     *
-     * @param categoria categoría del producto
-     */
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
 
     /**
      * Obtiene el proveedor del producto.
