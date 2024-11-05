@@ -79,26 +79,11 @@ public class Producto {
      * @param fecha_actualizacion Fecha de la última actualización del registro
      * @param minimo Mínimo permitido en inventario
      * @param maximo Máximo permitido en inventario
+     * @param tipoProductoId Tipo de Producto
      * @param categoria Categoría a la que pertenece el producto
      * @param proveedor Proveedor del producto
      */
-    public Producto(long idProducto, String sku, String nombreProducto, String descripcionProducto, double precio,
-                    int cantidad, Date fecha_creacion, Date fecha_actualizacion, int minimo, int maximo, 
-                    Categoria categoria, Proveedor proveedor) {
-        super();
-        this.idProducto = idProducto;
-        this.sku = sku;
-        this.nombreProducto = nombreProducto;
-        this.descripcionProducto = descripcionProducto;
-        this.precio = precio;
-        this.cantidad = cantidad;
-        this.fecha_creacion = fecha_creacion;
-        this.fecha_actualizacion = fecha_actualizacion;
-        this.minimo = minimo;
-        this.maximo = maximo;
-        this.categoria = categoria;
-        this.proveedor = proveedor;
-    }
+    
 
     // Métodos de acceso (getters y setters)
 
@@ -111,7 +96,29 @@ public class Producto {
         return idProducto;
     }
 
-    /**
+    public Producto(long idProducto, String sku, String nombreProducto, String descripcionProducto, double precio,
+			int cantidad, Date fecha_creacion, Date fecha_actualizacion, int minimo, int maximo,
+			UnidadMedida unidadMedida, Marca marca, TipoProducto tipoProducto, Categoria categoria,
+			Proveedor proveedor) {
+		super();
+		this.idProducto = idProducto;
+		this.sku = sku;
+		this.nombreProducto = nombreProducto;
+		this.descripcionProducto = descripcionProducto;
+		this.precio = precio;
+		this.cantidad = cantidad;
+		this.fecha_creacion = fecha_creacion;
+		this.fecha_actualizacion = fecha_actualizacion;
+		this.minimo = minimo;
+		this.maximo = maximo;
+		this.unidadMedida = unidadMedida;
+		this.marca = marca;
+		this.tipoProducto = tipoProducto;
+		this.categoria = categoria;
+		this.proveedor = proveedor;
+	}
+
+	/**
      * Asigna el identificador único del producto.
      *
      * @param idProducto id del producto
@@ -317,8 +324,27 @@ public class Producto {
     public void setMarca(Marca marca) {
         this.marca = marca;
     }
+    
+    
+    /**
+     * Obtiene el tipo de producto al que pertenece el producto.
+     *
+     * @return tipo de producto
+     */
+    public TipoProducto getTipoProducto() {
+		return tipoProducto;
+	}
 
     /**
+     * Asigna el tipo de producto al que pertenece el producto.
+     *
+     * @param tipoProducto tipo de producto
+     */
+	public void setTipoProducto(TipoProducto tipoProducto) {
+		this.tipoProducto = tipoProducto;
+	}
+
+	/**
      * Obtiene la categoría a la que pertenece el producto.
      *
      * @return categoría del producto
