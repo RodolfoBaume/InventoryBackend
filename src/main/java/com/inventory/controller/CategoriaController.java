@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inventory.dto.CategoriaDto;
+import com.inventory.entity.Producto;
 import com.inventory.projection.CategoriaProductoDTO;
 import com.inventory.service.ICategoriaService;
+import com.inventory.service.IProductoService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
@@ -27,6 +29,9 @@ public class CategoriaController {
 
 	@Autowired
 	private ICategoriaService categoriaService;
+	
+	@Autowired
+	private IProductoService productoService;
 
 	// Endpoint para obtener todas las categorías en forma de árbol
     @GetMapping("/categorias")
@@ -76,4 +81,13 @@ public class CategoriaController {
             .orElse(ResponseEntity.notFound().build());
     }
 */
+    
+    @GetMapping("/categorias/{idCategoria}/productos")
+    public ResponseEntity<List<Producto>> obtenerProductosPorCategoria(@PathVariable Long idCategoria) {
+        List<Producto> productos = categoriaService.obtenerProductosPorCategoriaId(idCategoria);
+        if (productos.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(productos);
+    }
 }

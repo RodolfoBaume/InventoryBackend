@@ -9,15 +9,20 @@ import org.springframework.stereotype.Service;
 
 import com.inventory.dto.CategoriaDto;
 import com.inventory.entity.Categoria;
+import com.inventory.entity.Producto;
 import com.inventory.projection.CategoriaProductoDTO;
 import com.inventory.projection.ProductoVistaDto;
 import com.inventory.repository.ICategoriaRepository;
+import com.inventory.repository.IProductoRepository;
 
 @Service
 public class CategoriaService implements ICategoriaService{
 
 	@Autowired
 	private ICategoriaRepository categoriaRepository;
+	
+	@Autowired
+	private IProductoRepository productoRepository;
 
 	// Método para obtener todas las categorías en forma de árbol
     public List<CategoriaDto> obtenerCategoriasEnArbol() {
@@ -194,16 +199,10 @@ public class CategoriaService implements ICategoriaService{
     
               */
     
-    public List<Categoria> obtenerTodasLasCategoriasConProductos() {
-        return categoriaRepository.obtenerCategoriasConProductos();
+  
+    public List<Producto> obtenerProductosPorCategoriaId(Long idCategoria) {
+        return productoRepository.obtenerProductosPorCategoriaId(idCategoria);
     }
-
-    /*
-    public Optional<Categoria> obtenerCategoriaConProductosPorId(Long idCategoria) {
-        return categoriaRepository.obtenerCategoriaConProductosPorId(idCategoria);
-    }
-
-	*/
 
 
     

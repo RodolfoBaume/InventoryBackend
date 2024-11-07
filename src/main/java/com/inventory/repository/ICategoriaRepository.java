@@ -26,13 +26,17 @@ public interface ICategoriaRepository extends JpaRepository<Categoria, Long> {
 	 * Long idCategoria);
 	 */
 
+	/*
 	@Query("SELECT c FROM Categoria c " + "LEFT JOIN FETCH c.subcategorias sc " + "LEFT JOIN FETCH sc.tiposProducto tp "
 			+ "LEFT JOIN FETCH tp.producto p " + "WHERE c.folder = false")
 	List<Categoria> obtenerCategoriasConProductos();
-
+*/
 	/*
 	@Query("SELECT c FROM Categoria c " + "LEFT JOIN FETCH c.subcategorias sc " + "LEFT JOIN FETCH sc.tiposProducto tp "
 			+ "LEFT JOIN FETCH tp.productos p " + "WHERE c.folder = false AND c.idCategoria = :idCategoria")
 	Optional<Categoria> obtenerCategoriaConProductosPorId(@Param("idCategoria") Long idCategoria);
 */
+	
+	
+
 }

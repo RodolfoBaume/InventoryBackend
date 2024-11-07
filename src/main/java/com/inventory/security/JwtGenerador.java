@@ -48,7 +48,7 @@ public class JwtGenerador {
 			Jwts.parser().setSigningKey(ConstantesSeguridad.JWT_FIRMA).parseClaimsJws(token);
 			return true;
 		} catch (Exception e) {
-			throw new AuthenticationCredentialsNotFoundException("Jwt ah expirado o esta incorrecto");
+			throw new AuthenticationCredentialsNotFoundException("401");
 		}
 	}
 }

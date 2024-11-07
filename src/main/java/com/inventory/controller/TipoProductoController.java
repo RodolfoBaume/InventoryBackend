@@ -38,21 +38,21 @@ public class TipoProductoController {
 	private ITipoProductoService tipoProductoService;
 
 	// Consulta todos
-	@GetMapping("/tipoProductos")
+	@GetMapping("/tiposProducto")
 	@ResponseStatus(HttpStatus.OK)
 	public List<TipoProducto> consulta() {
 		return tipoProductoService.findAll();
 	}
 
 	// Consulta paginación
-	@GetMapping("/tipoProductos/page/{page}")
+	@GetMapping("/tiposProducto/page/{page}")
 	public Page<TipoProducto> consultaPage(@PathVariable Integer page) {
 		Pageable pageable = PageRequest.of(page, 10, Sort.by("idTipoProducto").ascending());
 		return tipoProductoService.findAllPage(pageable);
 	}
 
 	// Consulta por id
-	@GetMapping("/tipoProductos/{id}")
+	@GetMapping("/tiposProducto/{id}")
 	public ResponseEntity<?> consultaPorID(@PathVariable Long id) {
 
 		TipoProducto tipoProducto = null;
@@ -74,7 +74,7 @@ public class TipoProductoController {
 	}
 
 	// Eliminar por id
-	@DeleteMapping("/tipoProductos/{id}")
+	@DeleteMapping("/tiposProducto/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 
 		Map<String, Object> response = new HashMap<>();
@@ -97,7 +97,7 @@ public class TipoProductoController {
 	}
 
 	// Crear
-	@PostMapping("/tipoProductos")
+	@PostMapping("/tiposProducto")
 	public ResponseEntity<?> create(@RequestBody TipoProductoDto tipoProducto) {
 		TipoProducto tipoProductoNew = null;
 		Map<String, Object> response = new HashMap<>();
@@ -117,7 +117,7 @@ public class TipoProductoController {
 	}
 
 	// Modificar
-	@PutMapping("/tipoProductos/{id}")
+	@PutMapping("/tiposProducto/{id}")
 	public ResponseEntity<?> modify(@PathVariable Long id, @RequestBody TipoProductoDto tipoProducto) {
 		TipoProducto tipoProductoNew = null;
 		Map<String, Object> response = new HashMap<>();
