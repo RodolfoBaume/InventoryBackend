@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 public class ValorAtributo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long valorAtributoId;
+    private Long idValorAtributo;
     
     @Column(nullable = false)
     private String valor;
@@ -29,23 +29,21 @@ public class ValorAtributo {
  	}
 
 
-	public ValorAtributo(Long valorAtributoId, String valor, Atributo atributo) {
+	public ValorAtributo(Long idValorAtributo, String valor, Atributo atributo) {
 		super();
-		this.valorAtributoId = valorAtributoId;
+		this.idValorAtributo = idValorAtributo;
 		this.valor = valor;
 		this.atributo = atributo;
 	}
 
-
-	public Long getValorAtributoId() {
-		return valorAtributoId;
+	public Long getIdValorAtributo() {
+		return idValorAtributo;
 	}
 
 
-	public void setValorAtributoId(Long valorAtributoId) {
-		this.valorAtributoId = valorAtributoId;
+	public void setIdValorAtributo(Long idValorAtributo) {
+		this.idValorAtributo = idValorAtributo;
 	}
-
 
 	public String getValor() {
 		return valor;
