@@ -43,7 +43,13 @@ public class AtributoController {
 	public List<Atributo> consulta() {
 		return atributoService.findAll();
 	}
-
+	
+	// Consulta todos los atributos asociados a un grupo específico
+	@GetMapping("/atributos/{idGrupo}")
+	public List<Atributo> consultaPorGrupo(Long idGrupo){
+		return atributoService.getAtributosByGrupo(idGrupo);
+	}
+	
 	// Consulta paginación
 	@GetMapping("/atributos/page/{page}")
 	public Page<Atributo> consultaPage(@PathVariable Integer page) {
@@ -97,12 +103,12 @@ public class AtributoController {
 
 	// Crear
 	@PostMapping("/atributos")
-	public ResponseEntity<?> create(@RequestBody AtributoDto atributo) {
+	public ResponseEntity<?> create(@RequestBody Long grupo,Atributo atributo) {
 		Atributo atributoNew = null;
 		Map<String, Object> response = new HashMap<>();
 
 		try {
-			atributoNew = this.atributoService.createAtributo(atributo);
+			atributoNew = this.atributoService.createAtributo(grupo, atributo);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar el insert en base de datos");
 			response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));

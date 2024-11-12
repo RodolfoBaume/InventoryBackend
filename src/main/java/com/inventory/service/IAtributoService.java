@@ -41,8 +41,13 @@ public interface IAtributoService {
      * @param atributo DTO con datos del atributo a crear
      * @return el atributo creado
      */
-    Atributo createAtributo(AtributoDto atributo);
+    //Atributo createAtributo(AtributoDto atributo);
+    Atributo createAtributo(Long grupoId, Atributo atributo);
 
+    
+    
+    List<Atributo> getAtributosByGrupo(Long grupoId);
+    
     /**
      * Elimina un atributo por su id.
      *
