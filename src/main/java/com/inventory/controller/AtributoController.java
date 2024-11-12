@@ -45,7 +45,7 @@ public class AtributoController {
 	}
 	
 	// Consulta todos los atributos asociados a un grupo específico
-	@GetMapping("/atributos/{idGrupo}")
+	@GetMapping("/atributos/{idGrupo}/grupo")
 	public List<Atributo> consultaPorGrupo(Long idGrupo){
 		return atributoService.getAtributosByGrupo(idGrupo);
 	}
