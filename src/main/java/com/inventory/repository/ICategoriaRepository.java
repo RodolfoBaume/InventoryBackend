@@ -14,29 +14,28 @@ import com.inventory.entity.Categoria;
 public interface ICategoriaRepository extends JpaRepository<Categoria, Long> {
 	List<Categoria> findByFolderTrue(); // Para obtener solo los nodos padre
 
+	
+	@Query("SELECT c FROM Categoria c LEFT JOIN FETCH c.productos WHERE c.folder = false")
+	List<Categoria> obtenerCategoriasConProductos();
+
+	// consulta por id categoria
+
+	@Query("SELECT c FROM Categoria c LEFT JOIN FETCH c.productos WHERE c.folder = false AND c.idCategoria = :idCategoria")
+	Optional<Categoria> obtenerCategoriaConProductosPorId(@Param("idCategoria") Long idCategoria);
+
+
+	
 	/*
-	 * @Query("SELECT c FROM Categoria c LEFT JOIN FETCH c.productos WHERE c.folder = false"
-	 * ) List<Categoria> obtenerCategoriasConProductos();
+	 * @Query("SELECT c FROM Categoria c " + "LEFT JOIN FETCH c.subcategorias sc " +
+	 * "LEFT JOIN FETCH sc.tiposProducto tp " + "LEFT JOIN FETCH tp.producto p " +
+	 * "WHERE c.folder = false") List<Categoria> obtenerCategoriasConProductos();
 	 */
 	/*
-	 * //consulta por id categoria
-	 * 
-	 * @Query("SELECT c FROM Categoria c LEFT JOIN FETCH c.productos WHERE c.folder = false AND c.idCategoria = :idCategoria"
-	 * ) Optional<Categoria> obtenerCategoriaConProductosPorId(@Param("idCategoria")
+	 * @Query("SELECT c FROM Categoria c " + "LEFT JOIN FETCH c.subcategorias sc " +
+	 * "LEFT JOIN FETCH sc.tiposProducto tp " + "LEFT JOIN FETCH tp.productos p " +
+	 * "WHERE c.folder = false AND c.idCategoria = :idCategoria")
+	 * Optional<Categoria> obtenerCategoriaConProductosPorId(@Param("idCategoria")
 	 * Long idCategoria);
 	 */
-
-	/*
-	@Query("SELECT c FROM Categoria c " + "LEFT JOIN FETCH c.subcategorias sc " + "LEFT JOIN FETCH sc.tiposProducto tp "
-			+ "LEFT JOIN FETCH tp.producto p " + "WHERE c.folder = false")
-	List<Categoria> obtenerCategoriasConProductos();
-*/
-	/*
-	@Query("SELECT c FROM Categoria c " + "LEFT JOIN FETCH c.subcategorias sc " + "LEFT JOIN FETCH sc.tiposProducto tp "
-			+ "LEFT JOIN FETCH tp.productos p " + "WHERE c.folder = false AND c.idCategoria = :idCategoria")
-	Optional<Categoria> obtenerCategoriaConProductosPorId(@Param("idCategoria") Long idCategoria);
-*/
-	
-	
 
 }

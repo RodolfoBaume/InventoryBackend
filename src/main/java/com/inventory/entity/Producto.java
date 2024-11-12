@@ -1,7 +1,10 @@
 package com.inventory.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -47,13 +51,20 @@ public class Producto {
     @JoinColumn(name = "marcaId")
     private Marca marca;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tipoProductoId")
-    private TipoProducto tipoProducto;
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "categoriaId")
+	private Categoria categoria;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "grupoId")
+	private Grupo grupo;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "proveedorId")
     private Proveedor proveedor;
+    
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Variante> variantes = new ArrayList<>();
 
     /**
      * Constructor vacío necesario para JPA.
@@ -78,22 +89,9 @@ public class Producto {
      * @param tipoProductoId Tipo de Producto
      * @param proveedor Proveedor del producto
      */
-    
-
-    // Métodos de acceso (getters y setters)
-
-    /**
-     * Obtiene el identificador único del producto.
-     *
-     * @return id del producto
-     */
-    public long getIdProducto() {
-        return idProducto;
-    }
-
     public Producto(long idProducto, String sku, String nombreProducto, String descripcionProducto, double precio,
 			int cantidad, Date fecha_creacion, Date fecha_actualizacion, int minimo, int maximo,
-			UnidadMedida unidadMedida, Marca marca, TipoProducto tipoProducto, 	Proveedor proveedor) {
+			UnidadMedida unidadMedida, Marca marca, Categoria categoria, Grupo grupo, Proveedor proveedor) {
 		super();
 		this.idProducto = idProducto;
 		this.sku = sku;
@@ -107,9 +105,21 @@ public class Producto {
 		this.maximo = maximo;
 		this.unidadMedida = unidadMedida;
 		this.marca = marca;
-		this.tipoProducto = tipoProducto;
+		this.categoria = categoria;
+		this.grupo = grupo;
 		this.proveedor = proveedor;
 	}
+
+    // Métodos de acceso (getters y setters)
+
+    /**
+     * Obtiene el identificador único del producto.
+     *
+     * @return id del producto
+     */
+    public long getIdProducto() {
+        return idProducto;
+    }
 
 	/**
      * Asigna el identificador único del producto.
@@ -318,26 +328,24 @@ public class Producto {
         this.marca = marca;
     }
     
-    
-    /**
-     * Obtiene el tipo de producto al que pertenece el producto.
-     *
-     * @return tipo de producto
-     */
-    public TipoProducto getTipoProducto() {
-		return tipoProducto;
+
+    public Categoria getCategoria() {
+		return categoria;
 	}
 
-    /**
-     * Asigna el tipo de producto al que pertenece el producto.
-     *
-     * @param tipoProducto tipo de producto
-     */
-	public void setTipoProducto(TipoProducto tipoProducto) {
-		this.tipoProducto = tipoProducto;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
-    /**
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
+
+	/**
      * Obtiene el proveedor del producto.
      *
      * @return proveedor del producto

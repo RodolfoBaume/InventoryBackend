@@ -24,86 +24,86 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inventory.dto.TipoProductoDto;
-import com.inventory.entity.TipoProducto;
-import com.inventory.service.ITipoProductoService;
+import com.inventory.dto.GrupoDto;
+import com.inventory.entity.Grupo;
+import com.inventory.service.IGrupoService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
 @RequestMapping("/api")
-public class TipoProductoController {
+public class GrupoController {
 
 	@Autowired
-	private ITipoProductoService tipoProductoService;
+	private IGrupoService grupoService;
 
 	// Consulta todos
-	@GetMapping("/tiposProducto")
+	@GetMapping("/grupos")
 	@ResponseStatus(HttpStatus.OK)
-	public List<TipoProducto> consulta() {
-		return tipoProductoService.findAll();
+	public List<Grupo> consulta() {
+		return grupoService.findAll();
 	}
 
 	// Consulta paginación
-	@GetMapping("/tiposProducto/page/{page}")
-	public Page<TipoProducto> consultaPage(@PathVariable Integer page) {
-		Pageable pageable = PageRequest.of(page, 10, Sort.by("idTipoProducto").ascending());
-		return tipoProductoService.findAllPage(pageable);
+	@GetMapping("/grupos/page/{page}")
+	public Page<Grupo> consultaPage(@PathVariable Integer page) {
+		Pageable pageable = PageRequest.of(page, 10, Sort.by("idGrupo").ascending());
+		return grupoService.findAllPage(pageable);
 	}
 
 	// Consulta por id
-	@GetMapping("/tiposProducto/{id}")
+	@GetMapping("/grupos/{id}")
 	public ResponseEntity<?> consultaPorID(@PathVariable Long id) {
 
-		TipoProducto tipoProducto = null;
+		Grupo grupo = null;
 		String response = "";
 		try {
-			tipoProducto = tipoProductoService.findById(id);
+			grupo = grupoService.findById(id);
 		} catch (DataAccessException e) {
 			response = "Error al realizar la consulta.";
 			response = response.concat(e.getMessage().concat(e.getMostSpecificCause().toString()));
 			return new ResponseEntity<String>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		if (tipoProducto == null) {
-			response = "El tipo de Producto con el ID: ".concat(id.toString())
+		if (grupo == null) {
+			response = "El grupo con el ID: ".concat(id.toString())
 					.concat(" no existe en la base de datos");
 			return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<TipoProducto>(tipoProducto, HttpStatus.OK);
+		return new ResponseEntity<Grupo>(grupo, HttpStatus.OK);
 	}
 
 	// Eliminar por id
-	@DeleteMapping("/tiposProducto/{id}")
+	@DeleteMapping("/grupos/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 
 		Map<String, Object> response = new HashMap<>();
 
 		try {
-			TipoProducto tipoProductoDelete = this.tipoProductoService.findById(id);
-			if (tipoProductoDelete == null) {
-				response.put("mensaje", "Error al eliminar. El Tipo de Producto no existe en base de datos");
+			Grupo grupoDelete = this.grupoService.findById(id);
+			if (grupoDelete == null) {
+				response.put("mensaje", "Error al eliminar. El Grupo no existe en base de datos");
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
-			tipoProductoService.deleteTipoMovimiento(id);
+			grupoService.deleteGrupo(id);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al eliminar en base de datos");
 			response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "Tipo de Producto eliminado con éxito");
+		response.put("mensaje", "Grupo eliminado con éxito");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 	}
 
 	// Crear
-	@PostMapping("/tiposProducto")
-	public ResponseEntity<?> create(@RequestBody TipoProductoDto tipoProducto) {
-		TipoProducto tipoProductoNew = null;
+	@PostMapping("/grupos")
+	public ResponseEntity<?> create(@RequestBody GrupoDto grupo) {
+		Grupo grupoNew = null;
 		Map<String, Object> response = new HashMap<>();
 
 		try {
-			tipoProductoNew = this.tipoProductoService.createTipoProducto(tipoProducto);
+			grupoNew = this.grupoService.createGrupo(grupo);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar el insert en base de datos");
 			response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
@@ -111,19 +111,19 @@ public class TipoProductoController {
 		}
 
 		response.put("mensaje",
-				"Tipo de Producto creado con éxito, con el ID " + tipoProductoNew.getIdTipoProducto());
-		response.put("tipoProducto", tipoProductoNew);
+				"Grupo creado con éxito, con el ID " + grupoNew.getIdGrupo());
+		response.put("grupo", grupoNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
 	// Modificar
-	@PutMapping("/tiposProducto/{id}")
-	public ResponseEntity<?> modify(@PathVariable Long id, @RequestBody TipoProductoDto tipoProducto) {
-		TipoProducto tipoProductoNew = null;
+	@PutMapping("/grupos/{id}")
+	public ResponseEntity<?> modify(@PathVariable Long id, @RequestBody GrupoDto grupo) {
+		Grupo grupoNew = null;
 		Map<String, Object> response = new HashMap<>();
 
 		try {
-			tipoProductoNew = this.tipoProductoService.updateTipoProducto(id, tipoProducto);
+			grupoNew = this.grupoService.updateGrupo(id, grupo);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar el update en base de datos");
 			response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
@@ -131,8 +131,8 @@ public class TipoProductoController {
 		}
 
 		response.put("mensaje",
-				"Tipo de Producto modificado con éxito, con el ID " + tipoProductoNew.getIdTipoProducto());
-		response.put("tipoProducto", tipoProductoNew);
+				"Grupo modificado con éxito, con el ID " + grupoNew.getIdGrupo());
+		response.put("grupo", grupoNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 }

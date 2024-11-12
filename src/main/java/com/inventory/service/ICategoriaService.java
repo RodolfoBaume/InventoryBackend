@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.inventory.dto.CategoriaDto;
-import com.inventory.entity.Categoria;
-import com.inventory.entity.Producto;
 import com.inventory.projection.CategoriaProductoDTO;
 
 public interface ICategoriaService {
@@ -20,8 +18,10 @@ public interface ICategoriaService {
 	
 	void eliminarCategoria(Long id);
 	
-	//List<Categoria> obtenerCategoriasConProductos();
+	List<CategoriaProductoDTO> obtenerCategoriasConProductos();
 	
-	List<Producto> obtenerProductosPorCategoriaId(Long idCategoria);
+	Optional<CategoriaProductoDTO> obtenerCategoriaConProductosPorId(Long idCategoria);
+	
+	//List<Producto> obtenerProductosPorCategoriaId(Long idCategoria);
 	
 }

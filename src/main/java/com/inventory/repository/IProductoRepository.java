@@ -11,12 +11,12 @@ import com.inventory.entity.Producto;
 
 @Repository
 public interface IProductoRepository extends JpaRepository<Producto, Long>{
-
+/*
 	@Query("SELECT p FROM Producto p " +
 	           "JOIN p.tipoProducto tp " +
 	           "JOIN tp.categoria c " +
 	           "WHERE c.idCategoria = :idCategoria")
 	    List<Producto> obtenerProductosPorCategoriaId(@Param("idCategoria") Long idCategoria);
-
+*/
 	
 }

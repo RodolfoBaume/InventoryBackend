@@ -20,18 +20,18 @@ public class Atributo {
     private String atributo;
 
     @ManyToOne
-    @JoinColumn(name = "producto_id")
-    private Producto producto;
+    @JoinColumn(name = "grupo_id")
+    private Grupo grupo;
     
 	public Atributo() {
 		super();
 	}
 
-	public Atributo(Long atributoId, String atributo, Producto producto) {
+	public Atributo(Long atributoId, String atributo, Grupo grupo) {
 		super();
 		this.atributoId = atributoId;
 		this.atributo = atributo;
-		this.producto = producto;
+		this.grupo = grupo;
 	}
 
 	public Long getAtributoId() {
@@ -50,13 +50,13 @@ public class Atributo {
 		this.atributo = atributo;
 	}
 
-	public Producto getProducto() {
-		return producto;
+	public Grupo getGrupo() {
+		return grupo;
 	}
 
-	public void setProducto(Producto producto) {
-		this.producto = producto;
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
-    
+
 }
 

@@ -49,9 +49,9 @@ public class Categoria {
      */
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Categoria> subcategorias = new ArrayList<>();
-
-    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY)
-    private List<TipoProducto> tiposProducto;
+    
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Producto> productos = new ArrayList<>();
     
     
     /**
@@ -72,15 +72,16 @@ public class Categoria {
      * @param subcategorias Lista de subcategorías
      */
     public Categoria(long idCategoria, String nombreCategoria, String descripcionCategoria, Boolean folder,
-                     Categoria parent, List<Categoria> subcategorias) {
-        super();
-        this.idCategoria = idCategoria;
-        this.nombreCategoria = nombreCategoria;
-        this.descripcionCategoria = descripcionCategoria;
-        this.folder = folder;
-        this.parent = parent;
-        this.subcategorias = subcategorias;
-    }
+			Categoria parent, List<Categoria> subcategorias, List<Producto> productos) {
+		super();
+		this.idCategoria = idCategoria;
+		this.nombreCategoria = nombreCategoria;
+		this.descripcionCategoria = descripcionCategoria;
+		this.folder = folder;
+		this.parent = parent;
+		this.subcategorias = subcategorias;
+		this.productos = productos;
+	}
 
     /**
      * Obtiene el identificador de la categoría.
@@ -91,7 +92,8 @@ public class Categoria {
         return idCategoria;
     }
 
-    /**
+
+	/**
      * Asigna el identificador de la categoría.
      *
      * @param idCategoria id de la categoría
@@ -189,5 +191,15 @@ public class Categoria {
     public void setSubcategorias(List<Categoria> subcategorias) {
         this.subcategorias = subcategorias;
     }
+
+	public List<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
+    
+    
 
 }

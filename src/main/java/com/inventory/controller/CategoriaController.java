@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inventory.dto.CategoriaDto;
-import com.inventory.entity.Producto;
 import com.inventory.projection.CategoriaProductoDTO;
 import com.inventory.service.ICategoriaService;
-import com.inventory.service.IProductoService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
@@ -30,8 +28,6 @@ public class CategoriaController {
 	@Autowired
 	private ICategoriaService categoriaService;
 	
-	@Autowired
-	private IProductoService productoService;
 
 	// Endpoint para obtener todas las categorías en forma de árbol
     @GetMapping("/categorias")
@@ -65,23 +61,23 @@ public class CategoriaController {
         categoriaService.eliminarCategoria(id);
     }
     
-    /*
+    
     @GetMapping("/categorias/productos")
     public ResponseEntity<List<CategoriaProductoDTO>> obtenerCategoriasConProductos() {
         List<CategoriaProductoDTO> categoriasConProductos = categoriaService.obtenerCategoriasConProductos();
         return ResponseEntity.ok(categoriasConProductos);
     }
-    */
     
-    /*
+    
+    
     @GetMapping("/categorias/{idCategoria}/productos")
     public ResponseEntity<CategoriaProductoDTO> obtenerCategoriaConProductosPorId(@PathVariable Long idCategoria) {
         return categoriaService.obtenerCategoriaConProductosPorId(idCategoria)
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
     }
-*/
-    
+
+    /*
     @GetMapping("/categorias/{idCategoria}/productos")
     public ResponseEntity<List<Producto>> obtenerProductosPorCategoria(@PathVariable Long idCategoria) {
         List<Producto> productos = categoriaService.obtenerProductosPorCategoriaId(idCategoria);
@@ -90,4 +86,5 @@ public class CategoriaController {
         }
         return ResponseEntity.ok(productos);
     }
+    */
 }
