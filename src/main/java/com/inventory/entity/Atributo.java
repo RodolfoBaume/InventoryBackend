@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 public class Atributo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long atributoId;
+    private Long idAtributo;
     
     @Column(nullable = false)
     private String atributo;
@@ -27,19 +27,19 @@ public class Atributo {
 		super();
 	}
 
-	public Atributo(Long atributoId, String atributo, Grupo grupo) {
+	public Atributo(Long idAtributo, String atributo, Grupo grupo) {
 		super();
-		this.atributoId = atributoId;
+		this.idAtributo = idAtributo;
 		this.atributo = atributo;
 		this.grupo = grupo;
 	}
 
-	public Long getAtributoId() {
-		return atributoId;
+	public Long getIdAtributo() {
+		return idAtributo;
 	}
 
-	public void setAtributoId(Long atributoId) {
-		this.atributoId = atributoId;
+	public void setIdAtributo(Long idAtributo) {
+		this.idAtributo = idAtributo;
 	}
 
 	public String getAtributo() {
