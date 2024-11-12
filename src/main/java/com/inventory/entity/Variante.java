@@ -25,4 +25,40 @@ public class Variante {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_combinacion_atributos", nullable = false)
     private CombinacionAtributos combinacionAtributos;
+
+	public Variante() {
+		super();
+	}
+
+	public Variante(Long idVariante, Producto producto, CombinacionAtributos combinacionAtributos) {
+		super();
+		this.idVariante = idVariante;
+		this.producto = producto;
+		this.combinacionAtributos = combinacionAtributos;
+	}
+
+	public Long getIdVariante() {
+		return idVariante;
+	}
+
+	public void setIdVariante(Long idVariante) {
+		this.idVariante = idVariante;
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
+	public CombinacionAtributos getCombinacionAtributos() {
+		return combinacionAtributos;
+	}
+
+	public void setCombinacionAtributos(CombinacionAtributos combinacionAtributos) {
+		this.combinacionAtributos = combinacionAtributos;
+	}
+    
 }

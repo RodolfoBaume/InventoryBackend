@@ -25,5 +25,42 @@ public class CombinacionValorAtributo {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "valor_atributo_id", nullable = false)
     private ValorAtributo valorAtributo;
+
+	public CombinacionValorAtributo() {
+		super();
+	}
+
+	public CombinacionValorAtributo(Long idCombinacionValorAtributo, CombinacionAtributos combinacionAtributos,
+			ValorAtributo valorAtributo) {
+		super();
+		this.idCombinacionValorAtributo = idCombinacionValorAtributo;
+		this.combinacionAtributos = combinacionAtributos;
+		this.valorAtributo = valorAtributo;
+	}
+
+	public Long getIdCombinacionValorAtributo() {
+		return idCombinacionValorAtributo;
+	}
+
+	public void setIdCombinacionValorAtributo(Long idCombinacionValorAtributo) {
+		this.idCombinacionValorAtributo = idCombinacionValorAtributo;
+	}
+
+	public CombinacionAtributos getCombinacionAtributos() {
+		return combinacionAtributos;
+	}
+
+	public void setCombinacionAtributos(CombinacionAtributos combinacionAtributos) {
+		this.combinacionAtributos = combinacionAtributos;
+	}
+
+	public ValorAtributo getValorAtributo() {
+		return valorAtributo;
+	}
+
+	public void setValorAtributo(ValorAtributo valorAtributo) {
+		this.valorAtributo = valorAtributo;
+	}
+        
 }
 

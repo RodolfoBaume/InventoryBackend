@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -103,22 +104,27 @@ public class ValorAtributoController {
 
 	// Crear
 	@PostMapping("/valoresAtributos")
-	public ResponseEntity<?> create(@RequestBody Long atributo, ValorAtributo valorAtributo) {
-		ValorAtributo valorAtributoNew = null;
-		Map<String, Object> response = new HashMap<>();
+	public ResponseEntity<?> create(@RequestParam Long atributoId, @RequestBody ValorAtributo valorAtributo) {
+        ValorAtributo valorAtributoNew = null;
+        Map<String, Object> response = new HashMap<>();
 
-		try {
-			valorAtributoNew = this.valorAtributoService.createValorAtributo(atributo, valorAtributo);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al realizar el insert en base de datos");
-			response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+        try {
+            valorAtributoNew = this.valorAtributoService.createValorAtributo(atributoId, valorAtributo);
+        } catch (DataAccessException e) {
+            response.put("mensaje", "Error al realizar el insert en base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getLocalizedMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-		response.put("mensaje", "Valor Atributo creado con éxito, con el ID " + valorAtributoNew.getIdValorAtributo());
-		response.put("valorAtributo", valorAtributoNew);
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-	}
+        if (valorAtributoNew == null) {
+            response.put("mensaje", "El atributo con ID " + atributoId + " no existe");
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+
+        response.put("mensaje", "Valor de atributo creado con éxito, con el ID " + valorAtributoNew.getIdValorAtributo());
+        response.put("valorAtributo", valorAtributoNew);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
 
 	// Modificar
 	@PutMapping("/valoresAtributos/{id}")

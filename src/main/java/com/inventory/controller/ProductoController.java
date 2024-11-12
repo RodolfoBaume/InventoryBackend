@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -124,13 +125,13 @@ public class ProductoController {
      * @param producto DTO con datos del nuevo producto.
      * @return el producto creado.
      */
-	@PostMapping("/productos")
+	@PostMapping("/productos2")
 	public ResponseEntity<?> create(@RequestBody ProductoDto producto) {
 		Producto productoNew = null;
 		Map<String, Object> response = new HashMap<>();
 
 		try {
-			productoNew = this.productoService.createProducto(producto);
+			productoNew = this.productoService.createProducto2(producto);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar el insert en base de datos");
 			response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
@@ -141,6 +142,23 @@ public class ProductoController {
 		response.put("producto", productoNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
+	
+	// Crea nuevo producto
+	@PostMapping("/productos")
+    public ResponseEntity<Producto> createProducto(
+            @RequestBody Producto producto,  
+            @RequestParam Long combinacionAtributosId,
+            @RequestParam int cantidadInicial) {
+        
+        Producto createdProducto = productoService.createProducto(producto, combinacionAtributosId, cantidadInicial);
+        
+        if (createdProducto == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdProducto);
+    }
+	
 
 	/**
      * Actualiza un producto existente.

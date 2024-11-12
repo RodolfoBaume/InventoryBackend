@@ -29,4 +29,42 @@ public class CombinacionAtributos {
 
     @OneToMany(mappedBy = "combinacionAtributos", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<CombinacionValorAtributo> valoresAtributos = new ArrayList<>();
+
+	public CombinacionAtributos() {
+		super();
+	}
+
+	public CombinacionAtributos(Long idCombinacionAtributos, Grupo grupo,
+			List<CombinacionValorAtributo> valoresAtributos) {
+		super();
+		this.idCombinacionAtributos = idCombinacionAtributos;
+		this.grupo = grupo;
+		this.valoresAtributos = valoresAtributos;
+	}
+
+	public Long getIdCombinacionAtributos() {
+		return idCombinacionAtributos;
+	}
+
+	public void setIdCombinacionAtributos(Long idCombinacionAtributos) {
+		this.idCombinacionAtributos = idCombinacionAtributos;
+	}
+
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
+
+	public List<CombinacionValorAtributo> getValoresAtributos() {
+		return valoresAtributos;
+	}
+
+	public void setValoresAtributos(List<CombinacionValorAtributo> valoresAtributos) {
+		this.valoresAtributos = valoresAtributos;
+	}
+    
+    
 }

@@ -45,7 +45,9 @@ public interface IProductoService {
      * @param producto DTO del producto a crear.
      * @return el producto creado.
      */
-    Producto createProducto(ProductoDto producto);
+    Producto createProducto2(ProductoDto producto);
+    
+    Producto createProducto(Producto producto, Long combinacionAtributosId, int cantidadInicial);
 
     /**
      * Elimina un producto por su ID.
