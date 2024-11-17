@@ -9,11 +9,11 @@ import com.inventory.dto.ProveedorDto;
 import com.inventory.entity.Proveedor;
 
 public interface IProveedorService {
-	List<Proveedor> findAll();
+	List<Proveedor> findAll(boolean isDeleted);
+		
+	Page<Proveedor> findAllPage(Pageable pageable, boolean isDeleted);
 	
-	Page<Proveedor> findAllPage(Pageable pageable);
-	
-	Proveedor findById(Long idCliente);
+	Proveedor findById(Long idCliente, boolean isDeleted);
 	
 	Proveedor createProveedor(ProveedorDto proveedor);
 	

@@ -2,6 +2,8 @@ package com.inventory.entity;
 
 
 import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 import org.hibernate.annotations.SQLDelete;
 
 import jakarta.persistence.Column;
@@ -14,7 +16,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="proveedores")
 @SQLDelete(sql = "UPDATE proveedores SET deleted = true WHERE id_proveedor=?")
-//@FilterDef(name = "deletedProveedoresFilter", parameters = @ParamDef(name = "isDeleted", type = "boolean"))
+@FilterDef(name = "deletedProveedoresFilter", parameters = @ParamDef(name = "isDeleted", type = org.hibernate.type.descriptor.java.BooleanJavaType.class))
 @Filter(name = "deletedProveedoresFilter", condition = "deleted = :isDeleted")
 public class Proveedor {
 	@Id

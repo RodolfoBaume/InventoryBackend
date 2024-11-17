@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,60 +42,78 @@ public class ProveedorController {
 	// Consulta todos
 	@GetMapping("/proveedores")
 	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<List<Proveedor>> findAll(@RequestParam(required = false, defaultValue = "false")boolean isDeleted) {
+		List<Proveedor> proveedores = proveedorService.findAll(isDeleted);
+		return new ResponseEntity<>(proveedores, HttpStatus.OK);
+	}
+	/*
 	public List<Proveedor> consulta() {
 		return proveedorService.findAll();
 	}
+	*/
 
 	// Consulta paginación
 	@GetMapping("/proveedores/page/{page}")
-	public Page<Proveedor> consultaPage(@PathVariable Integer page) {
-		Pageable pageable = PageRequest.of(page, 10, Sort.by("idProveedor").ascending());
-		return proveedorService.findAllPage(pageable);
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Page<Proveedor>> consultaPage(
+	        @PathVariable Integer page,
+	        @RequestParam(required = false, defaultValue = "false") boolean isDeleted) {
+	    Pageable pageable = PageRequest.of(page, 10, Sort.by("idProveedor").ascending());
+	    Page<Proveedor> proveedores = proveedorService.findAllPage(pageable, isDeleted);
+	    return new ResponseEntity<>(proveedores, HttpStatus.OK);
 	}
 
 	// Consulta por id
 	@GetMapping("/proveedores/{id}")
-	public ResponseEntity<?> consultaPorID(@PathVariable Long id) {
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> consultaPorID(
+	        @PathVariable Long id,
+	        @RequestParam(required = false, defaultValue = "false") boolean isDeleted) {
+	    Proveedor proveedor = null;
+	    String response = "";
+	    try {
+	        proveedor = proveedorService.findById(id, isDeleted);
+	    } catch (DataAccessException e) {
+	        response = "Error al realizar la consulta.";
+	        response = response.concat(e.getMessage().concat(e.getMostSpecificCause().toString()));
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 
-		Proveedor proveedor = null;
-		String response = "";
-		try {
-			proveedor = proveedorService.findById(id);
-		} catch (DataAccessException e) {
-			response = "Error al realizar la consulta.";
-			response = response.concat(e.getMessage().concat(e.getMostSpecificCause().toString()));
-			return new ResponseEntity<String>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-		if (proveedor == null) {
-			response = "El proveedor con el ID: ".concat(id.toString()).concat(" no existe en la base de datos");
-			return new ResponseEntity<String>(response, HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<Proveedor>(proveedor, HttpStatus.OK);
+	    if (proveedor == null) {
+	        response = "El proveedor con el ID: ".concat(id.toString()).concat(" no existe en la base de datos");
+	        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+	    }
+	    return new ResponseEntity<>(proveedor, HttpStatus.OK);
 	}
-
 
 	// Eliminar por id
 	@DeleteMapping("/proveedores/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(
+	        @PathVariable Long id, 
+	        @RequestParam(required = false, defaultValue = "false") boolean isDeleted) {
 
-		Map<String, Object> response = new HashMap<>();
+	    Map<String, Object> response = new HashMap<>();
 
-		try {
-			Proveedor proveedorDelete = this.proveedorService.findById(id);
-			if (proveedorDelete == null) {
-				response.put("mensaje", "Error al eliminar. El Proveedor no existe en base de datos");
-				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+	    try {
+	        // Buscar el proveedor considerando el estado del filtro (isDeleted)
+	        Proveedor proveedorDelete = this.proveedorService.findById(id, isDeleted);
 
-			proveedorService.deleteProveedor(id);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al eliminar en base de datos");
-			response.put("error", e.getMessage().concat(e.getMostSpecificCause().getLocalizedMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		response.put("mensaje", "Proveedor eliminado con éxito");
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+	        if (proveedorDelete == null) {
+	            response.put("mensaje", "Error al eliminar. El proveedor no existe en la base de datos.");
+	            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+	        }
+
+	        // Eliminar el proveedor (soft delete)
+	        proveedorService.deleteProveedor(id);
+
+	    } catch (DataAccessException e) {
+	        response.put("mensaje", "Error al eliminar en la base de datos.");
+	        response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getLocalizedMessage()));
+	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+
+	    response.put("mensaje", "Proveedor eliminado con éxito.");
+	    return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	// Crear
