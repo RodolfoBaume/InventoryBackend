@@ -67,9 +67,15 @@ public class ProductoService implements IProductoService {
 	 * @return página de productos
 	 */
 	@Transactional(readOnly = true)
+	public Page<ProductoSimplificadoDto> obtenerProductosPaginados(Pageable pageable) {
+	    return productoRepository.findAll(pageable)
+	            .map(ProductoSimplificadoDto::new); // Convierte cada Producto en un ProductoSimplificadoDto
+	}
+	/*
 	public Page<Producto> findAllPage(Pageable pageable) {
 		return productoRepository.findAll(pageable);
 	}
+	*/
 
 	/**
 	 * Busca un producto por su id.

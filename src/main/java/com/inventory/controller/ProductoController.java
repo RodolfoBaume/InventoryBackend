@@ -69,9 +69,9 @@ public class ProductoController {
      * @return una página con productos.
      */
 	@GetMapping("/productos/page/{page}")
-	public Page<Producto> consultaPage(@PathVariable Integer page) {
+	public Page<ProductoSimplificadoDto> consultaPage(@PathVariable Integer page) {
 		Pageable pageable = PageRequest.of(page, 10, Sort.by("idProducto").ascending());
-		return productoService.findAllPage(pageable);
+		return productoService.obtenerProductosPaginados(pageable);
 	}
 
 	/**

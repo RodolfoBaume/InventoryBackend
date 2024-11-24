@@ -31,7 +31,9 @@ public interface IProductoService {
      * @param pageable objeto de paginación que contiene página, tamaño, etc.
      * @return una página con productos.
      */
-    Page<Producto> findAllPage(Pageable pageable);
+    Page<ProductoSimplificadoDto> obtenerProductosPaginados(Pageable pageable);
+    
+    //Page<Producto> findAllPage(Pageable pageable);
 
     /**
      * Busca un producto por su ID.
