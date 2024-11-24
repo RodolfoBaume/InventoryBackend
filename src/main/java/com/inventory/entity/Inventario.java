@@ -23,17 +23,26 @@ public class Inventario {
     private Variante variante;
 
     private int cantidad;
+    
+    @ManyToOne
+    @JoinColumn(name="almacen_id")
+    private Almacen almacen;
 
 	public Inventario() {
 		super();
 	}
 
-	public Inventario(Long idInventario, Variante variante, int cantidad) {
+	
+
+	public Inventario(Long idInventario, Variante variante, int cantidad, Almacen almacen) {
 		super();
 		this.idInventario = idInventario;
 		this.variante = variante;
 		this.cantidad = cantidad;
+		this.almacen = almacen;
 	}
+
+
 
 	public Long getIdInventario() {
 		return idInventario;
@@ -58,4 +67,18 @@ public class Inventario {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
+
+
+
+	public Almacen getAlmacen() {
+		return almacen;
+	}
+
+
+
+	public void setAlmacen(Almacen almacen) {
+		this.almacen = almacen;
+	}
+	
+	
 }

@@ -21,4 +21,7 @@ public interface IGrupoService {
 	Grupo deleteGrupo(Long idGrupo);
 	
 	Grupo updateGrupo(Long idGrupo, GrupoDto grupo);
+		
+	GrupoDto obtenerGrupoCompleto(Long idGrupo);
+	
 }

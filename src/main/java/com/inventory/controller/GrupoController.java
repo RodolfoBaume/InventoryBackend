@@ -28,6 +28,8 @@ import com.inventory.dto.GrupoDto;
 import com.inventory.entity.Grupo;
 import com.inventory.service.IGrupoService;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
 		RequestMethod.DELETE })
@@ -135,4 +137,39 @@ public class GrupoController {
 		response.put("grupo", grupoNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
+	
+	/*
+	@GetMapping("/grupos/{idGrupo}/atributos")
+    public ResponseEntity<GrupoProjection> obtenerGrupo(@PathVariable Long idGrupo) {
+        GrupoProjection grupo = grupoService.obtenerGrupoPorId(idGrupo);
+        if (grupo == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(grupo);
+    }
+    */
+
+	@GetMapping("/grupos/{idGrupo}/atributos")
+	public ResponseEntity<?> obtenerGrupo(@PathVariable Long idGrupo) {
+	    try {
+	        // Llamada al servicio para obtener el GrupoDto
+	        GrupoDto grupoDto = grupoService.obtenerGrupoCompleto(idGrupo);
+	        return ResponseEntity.ok(grupoDto);
+	    } catch (EntityNotFoundException ex) {
+	        // Manejo del caso en que el grupo no se encuentra
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                .body(Map.of(
+	                        "error", "Grupo no encontrado",
+	                        "idGrupo", idGrupo
+	                ));
+	    } catch (Exception ex) {
+	        // Manejo genérico de errores
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(Map.of(
+	                        "error", "Ocurrió un error inesperado",
+	                        "detalle", ex.getMessage()
+	                ));
+	    }
+	}
+
 }

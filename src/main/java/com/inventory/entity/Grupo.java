@@ -1,10 +1,15 @@
 package com.inventory.entity;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,16 +22,22 @@ public class Grupo {
 	private String nombreGrupo;
 	private Boolean status;
 	
+	@OneToMany(mappedBy = "grupo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Atributo> atributos;
+	
 	public Grupo() {
 		super();
 	}
 
-	public Grupo(long idGrupo, String nombreGrupo, Boolean status) {
+	public Grupo(long idGrupo, String nombreGrupo, Boolean status, List<Atributo> atributos) {
 		super();
 		this.idGrupo = idGrupo;
 		this.nombreGrupo = nombreGrupo;
 		this.status = status;
+		this.atributos = atributos;
 	}
+
+
 
 	public long getIdGrupo() {
 		return idGrupo;
@@ -51,5 +62,14 @@ public class Grupo {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+
+	public List<Atributo> getAtributos() {
+		return atributos;
+	}
+
+	public void setAtributos(List<Atributo> atributos) {
+		this.atributos = atributos;
+	}
+	
 	
 }

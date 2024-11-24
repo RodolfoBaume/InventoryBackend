@@ -1,5 +1,6 @@
 package com.inventory.service;
 
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -14,11 +15,14 @@ import com.inventory.dto.GrupoDto;
 import com.inventory.entity.Grupo;
 import com.inventory.repository.IGrupoRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class GrupoService implements IGrupoService{
 
 	@Autowired
 	private IGrupoRepository grupoRepository;
+	
 
 	// Consulta todos
 	@Transactional(readOnly = true)
@@ -62,5 +66,20 @@ public class GrupoService implements IGrupoService{
 		grupoEntity.setStatus(grupo.status());
 		return grupoRepository.save(grupoEntity);
 	}
+	
+	
 
+	
+	public GrupoDto obtenerGrupoCompleto(Long idGrupo) {
+	    Grupo grupo = grupoRepository.findById(idGrupo)
+	            .orElseThrow(() -> new EntityNotFoundException("Grupo con ID " + idGrupo + " no encontrado"));
+	    
+	    // Forzar inicialización de relaciones
+	    grupo.getAtributos().forEach(atributo -> atributo.getValores().size());
+	    
+	    return new GrupoDto(grupo);
+	}
+	
+	
+	
 }
