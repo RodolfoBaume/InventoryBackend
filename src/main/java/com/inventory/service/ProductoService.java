@@ -7,11 +7,11 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.inventory.dto.ProductoDto;
+import com.inventory.dto.ProductoSimplificadoDto;
 import com.inventory.entity.CombinacionAtributos;
 import com.inventory.entity.Inventario;
 import com.inventory.entity.Producto;
@@ -20,6 +20,8 @@ import com.inventory.repository.ICombinacionAtributosRepository;
 import com.inventory.repository.IInventarioRepository;
 import com.inventory.repository.IProductoRepository;
 import com.inventory.repository.IVarianteRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 /**
  * Implementación del servicio para la entidad {@link Producto}. Contiene la
@@ -46,9 +48,17 @@ public class ProductoService implements IProductoService {
 	 * @return lista de todos los productos
 	 */
 	@Transactional(readOnly = true)
+	public List<ProductoSimplificadoDto> obtenerTodosLosProductos() {
+        return productoRepository.findAll().stream()
+                .map(ProductoSimplificadoDto::new)
+                .toList();
+    }
+	
+	/*
 	public List<Producto> findAll() {
 		return (List<Producto>) productoRepository.findAll(Sort.by("idProducto"));
 	}
+	*/
 
 	/**
 	 * Consulta todos los productos con soporte de paginación.
@@ -68,9 +78,18 @@ public class ProductoService implements IProductoService {
 	 * @return el prodcuto si existe, de lo contrario null
 	 */
 	@Transactional(readOnly = true)
+	public ProductoSimplificadoDto obtenerProductoPorId(Long idProducto) {
+        Producto producto = productoRepository.findById(idProducto)
+                .orElseThrow(() -> new EntityNotFoundException("Producto con ID " + idProducto + " no encontrado"));
+
+        return new ProductoSimplificadoDto(producto);
+    }
+	
+	
 	public Producto findById(Long idProducto) {
 		return productoRepository.findById(idProducto).orElse(null);
 	}
+	
 
 	/**
 	 * Crea un nuevo producto a partir de un objeto ProductoDto.

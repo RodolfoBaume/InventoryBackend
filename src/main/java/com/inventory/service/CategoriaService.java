@@ -1,7 +1,6 @@
 package com.inventory.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.stereotype.Service;
 import com.inventory.dto.CategoriaDto;
 import com.inventory.dto.CategoriaProductoDto;
 import com.inventory.entity.Categoria;
-import com.inventory.projection.CategoriaProductoDTO;
-import com.inventory.projection.ProductoVistaDto;
 import com.inventory.repository.ICategoriaRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -147,6 +144,7 @@ public class CategoriaService implements ICategoriaService{
     
     
     //
+    /*
     public List<CategoriaProductoDTO> obtenerCategoriasConProductos() {
         List<Categoria> categorias = categoriaRepository.obtenerCategoriasConProductos();
 
@@ -171,10 +169,11 @@ public class CategoriaService implements ICategoriaService{
         ).collect(Collectors.toList());
     }
     
-   
+   */
     
   
     //Consulta por id categoria
+    /*
     public Optional<CategoriaProductoDTO> obtenerCategoriaConProductosPorId(Long idCategoria) {
         return categoriaRepository.obtenerCategoriaConProductosPorId(idCategoria)
             .map(categoria -> new CategoriaProductoDTO(
@@ -196,7 +195,7 @@ public class CategoriaService implements ICategoriaService{
             ));
     }  
     
-             
+      */       
     
     public CategoriaProductoDto obtenerProductosPorCategoria(Long idCategoria) {
         Categoria categoria = categoriaRepository.findCategoriaWithProductos(idCategoria)

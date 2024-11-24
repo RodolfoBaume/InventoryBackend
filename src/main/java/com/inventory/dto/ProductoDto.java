@@ -21,6 +21,21 @@ public record ProductoDto(long idProducto, String sku, String nombreProducto, St
      * @param producto entidad Producto para crear el DTO
      */
 	public ProductoDto(Producto producto) {
-		this(producto.getIdProducto(), producto.getSku(), producto.getNombreProducto(), producto.getDescripcionProducto(), producto.getPrecio(), producto.getCantidad(), producto.getFecha_creacion(), producto.getFecha_actualizacion(), producto.getMinimo(), producto.getMaximo(), producto.getUnidadMedida(), producto.getMarca(), producto.getCategoria(), producto.getGrupo(), producto.getProveedor());
+		this(
+			producto.getIdProducto(), 
+			producto.getSku(), 
+			producto.getNombreProducto(), 
+			producto.getDescripcionProducto(), 
+			producto.getPrecio(), 
+			producto.getCantidad(), 
+			producto.getFecha_creacion(), 
+			producto.getFecha_actualizacion(), 
+			producto.getMinimo(), 
+			producto.getMaximo(), 
+			producto.getUnidadMedida(), 
+			producto.getMarca(), 
+			producto.getCategoria(), 
+			producto.getGrupo(), 
+			producto.getProveedor());
 	}
 }

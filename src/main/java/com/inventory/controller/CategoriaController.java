@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inventory.dto.CategoriaDto;
 import com.inventory.dto.CategoriaProductoDto;
-import com.inventory.projection.CategoriaProductoDTO;
 import com.inventory.service.ICategoriaService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -66,15 +65,7 @@ public class CategoriaController {
         categoriaService.eliminarCategoria(id);
     }
     
-    
-    @GetMapping("/categorias/productos")
-    public ResponseEntity<List<CategoriaProductoDTO>> obtenerCategoriasConProductos() {
-        List<CategoriaProductoDTO> categoriasConProductos = categoriaService.obtenerCategoriasConProductos();
-        return ResponseEntity.ok(categoriasConProductos);
-    }
-    
-    
-    
+    //Endpoint Productos por categorias
     @GetMapping("/categorias/{idCategoria}/productos")
     public ResponseEntity<?> obtenerProductosPorCategoria(@PathVariable Long idCategoria) {
         try {

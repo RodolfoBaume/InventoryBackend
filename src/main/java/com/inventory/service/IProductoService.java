@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.inventory.dto.ProductoDto;
+import com.inventory.dto.ProductoSimplificadoDto;
 import com.inventory.entity.Producto;
 
 /**
@@ -21,7 +22,8 @@ public interface IProductoService {
      * 
      * @return una lista con todas las productos.
      */
-    List<Producto> findAll();
+    //List<Producto> findAll();
+    List<ProductoSimplificadoDto> obtenerTodosLosProductos();
 
     /**
      * Consulta todas las productos con paginación.
@@ -38,7 +40,10 @@ public interface IProductoService {
      * @return el producto encontrado o null si no existe.
      */
     Producto findById(Long idProducto);
-
+    
+    
+    ProductoSimplificadoDto obtenerProductoPorId(Long idProducto);
+    
     /**
      * Crea un nuevo producto.
      * 

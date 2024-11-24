@@ -26,8 +26,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inventory.dto.ProductoDto;
+import com.inventory.dto.ProductoSimplificadoDto;
 import com.inventory.entity.Producto;
 import com.inventory.service.IProductoService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 /**
  * Controlador REST para gestionar las operaciones de la entidad {@link Producto}.
@@ -49,9 +52,15 @@ public class ProductoController {
      */
 	@GetMapping("/productos")
 	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<List<ProductoSimplificadoDto>> obtenerTodosLosProductos() {
+        List<ProductoSimplificadoDto> productos = productoService.obtenerTodosLosProductos();
+        return ResponseEntity.ok(productos);
+    }
+	/*
 	public List<Producto> consulta() {
 		return productoService.findAll();
 	}
+	*/
 
 	/**
      * Consulta paginada de productos.
@@ -71,7 +80,22 @@ public class ProductoController {
      * @param id ID del producto.
      * @return el producto si existe, error si no.
      */
-	@GetMapping("/productos/{id}")
+	@GetMapping("/productos/{idProducto}")
+	 public ResponseEntity<?> obtenerProductoPorId(@PathVariable Long idProducto) {
+        try {
+            ProductoSimplificadoDto productoDto = productoService.obtenerProductoPorId(idProducto);
+            return ResponseEntity.ok(productoDto);
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", "Producto no encontrado", "idProducto", idProducto));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error inesperado", "detalle", ex.getMessage()));
+        }
+    }
+	
+	
+	/*
 	public ResponseEntity<?> consultaPorID(@PathVariable Long id) {
 
 		Producto producto = null;
@@ -91,6 +115,7 @@ public class ProductoController {
 		return new ResponseEntity<Producto>(producto, HttpStatus.OK);
 	}
 
+*/
 	/**
      * Elimina un producto por su ID.
      * 

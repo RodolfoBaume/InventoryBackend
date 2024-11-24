@@ -1,11 +1,9 @@
 package com.inventory.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.inventory.dto.CategoriaDto;
 import com.inventory.dto.CategoriaProductoDto;
-import com.inventory.projection.CategoriaProductoDTO;
 
 public interface ICategoriaService {
 
@@ -19,9 +17,9 @@ public interface ICategoriaService {
 	
 	void eliminarCategoria(Long id);
 	
-	List<CategoriaProductoDTO> obtenerCategoriasConProductos();
+	//List<CategoriaProductoDTO> obtenerCategoriasConProductos();
 	
-	Optional<CategoriaProductoDTO> obtenerCategoriaConProductosPorId(Long idCategoria);
+	//Optional<CategoriaProductoDTO> obtenerCategoriaConProductosPorId(Long idCategoria);
 	
 	//List<Producto> obtenerProductosPorCategoriaId(Long idCategoria);
 	CategoriaProductoDto obtenerProductosPorCategoria(Long idCategoria);
