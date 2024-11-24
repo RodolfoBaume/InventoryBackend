@@ -112,7 +112,7 @@ public class AtributoService implements IAtributoService {
 		Atributo atributoEntity = atributoRepository.findById(idAtributo)
 				.orElseThrow(() -> new NoSuchElementException("Atributo no encontrado con el ID: " + idAtributo));
 		atributoEntity.setAtributo(atributo.atributo());
-		atributoEntity.setGrupo(atributo.grupo());
+		//atributoEntity.setGrupo(atributo.grupo());
 		return atributoRepository.save(atributoEntity);
 	}
 

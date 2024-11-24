@@ -111,7 +111,7 @@ public class ValorAtributoService implements IValorAtributoService {
 	public ValorAtributo updateValorAtributo(Long idValorAtributo, ValorAtributoDto valorAtributo) {
 		ValorAtributo valorAtributoEntity = valorAtributoRepository.findById(idValorAtributo)
 				.orElseThrow(() -> new NoSuchElementException("ValorAtributo no encontrado con el ID: " + idValorAtributo));
-		valorAtributoEntity.setAtributo(valorAtributo.atributo());
+		//valorAtributoEntity.setAtributo(valorAtributo.atributo());
 		valorAtributoEntity.setValor(valorAtributo.valor());
 		return valorAtributoRepository.save(valorAtributoEntity);
 	}
