@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.inventory.dto.CategoriaDto;
+import com.inventory.dto.CategoriaProductoDto;
 import com.inventory.projection.CategoriaProductoDTO;
 
 public interface ICategoriaService {
@@ -23,5 +24,6 @@ public interface ICategoriaService {
 	Optional<CategoriaProductoDTO> obtenerCategoriaConProductosPorId(Long idCategoria);
 	
 	//List<Producto> obtenerProductosPorCategoriaId(Long idCategoria);
+	CategoriaProductoDto obtenerProductosPorCategoria(Long idCategoria);
 	
 }

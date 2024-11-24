@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.inventory.dto.CategoriaDto;
+import com.inventory.dto.CategoriaProductoDto;
 import com.inventory.entity.Categoria;
 import com.inventory.projection.CategoriaProductoDTO;
 import com.inventory.projection.ProductoVistaDto;
 import com.inventory.repository.ICategoriaRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CategoriaService implements ICategoriaService{
@@ -195,11 +198,11 @@ public class CategoriaService implements ICategoriaService{
     
              
     
-  /*
-    public List<Producto> obtenerProductosPorCategoriaId(Long idCategoria) {
-        return productoRepository.obtenerProductosPorCategoriaId(idCategoria);
+    public CategoriaProductoDto obtenerProductosPorCategoria(Long idCategoria) {
+        Categoria categoria = categoriaRepository.findCategoriaWithProductos(idCategoria)
+            .orElseThrow(() -> new EntityNotFoundException("Categoría con ID " + idCategoria + " no encontrada"));
+        
+        return new CategoriaProductoDto(categoria);
     }
-
-*/
     
 }
