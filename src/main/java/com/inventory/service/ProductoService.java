@@ -198,4 +198,9 @@ public class ProductoService implements IProductoService {
 		productoEntity.setProveedor(producto.proveedor());
 		return productoRepository.save(productoEntity);
 	}
+	
+	//total productos
+	public long countProductos() {
+		return productoRepository.count();
+	}
 }

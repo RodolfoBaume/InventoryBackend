@@ -72,4 +72,7 @@ public interface IProductoService {
      * @return el producto actualizada.
      */
     Producto updateProducto(Long idProducto, ProductoDto producto);
+    
+    //total productos
+    long countProductos();
 }
