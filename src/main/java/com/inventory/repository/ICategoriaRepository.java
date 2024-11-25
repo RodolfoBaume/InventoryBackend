@@ -27,4 +27,9 @@ public interface ICategoriaRepository extends JpaRepository<Categoria, Long> {
 	@Query("SELECT c FROM Categoria c LEFT JOIN FETCH c.productos WHERE c.idCategoria = :idCategoria")
     Optional<Categoria> findCategoriaWithProductos(@Param("idCategoria") Long idCategoria);
 	
+	//breadcrumb
+	@Query("SELECT c FROM Categoria c WHERE c.idCategoria = :idCategoria")
+	Optional<Categoria> findCategoriaById(@Param("idCategoria") Long idCategoria);
+
+	
 }

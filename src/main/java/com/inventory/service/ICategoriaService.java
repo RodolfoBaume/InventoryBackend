@@ -24,4 +24,6 @@ public interface ICategoriaService {
 	//List<Producto> obtenerProductosPorCategoriaId(Long idCategoria);
 	CategoriaProductoDto obtenerProductosPorCategoria(Long idCategoria);
 	
+	//breadcrumb
+	List<CategoriaDto> obtenerJerarquiaPorId(Long idCategoria);
 }

@@ -1,10 +1,12 @@
 package com.inventory.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.inventory.dto.CategoriaDto;
 import com.inventory.dto.CategoriaProductoDto;
@@ -202,6 +204,34 @@ public class CategoriaService implements ICategoriaService{
             .orElseThrow(() -> new EntityNotFoundException("Categoría con ID " + idCategoria + " no encontrada"));
         
         return new CategoriaProductoDto(categoria);
+    }
+    
+    //breadcrumb
+    @Transactional(readOnly = true)
+    public List<CategoriaDto> obtenerJerarquiaPorId(Long idCategoria) {
+        // Buscar la categoría actual
+        Categoria categoriaActual = categoriaRepository.findById(idCategoria)
+                .orElseThrow(() -> new EntityNotFoundException("Categoría no encontrada"));
+
+        // Crear una lista para almacenar la jerarquía
+        List<CategoriaDto> jerarquia = new ArrayList<>();
+
+        // Recorrer los padres de la categoría hasta llegar a la raíz
+        while (categoriaActual != null) {
+            // Agregar la categoría actual al inicio de la lista
+            jerarquia.add(0, new CategoriaDto(
+                categoriaActual.getIdCategoria(),
+                categoriaActual.getNombreCategoria(),
+                categoriaActual.getDescripcionCategoria(),
+                categoriaActual.getFolder(),
+                categoriaActual.getParent() != null ? categoriaActual.getParent().getIdCategoria() : null,
+                List.of() // No incluir subcategorías en el breadcrumb
+            ));
+            // Subir al padre
+            categoriaActual = categoriaActual.getParent();
+        }
+
+        return jerarquia; // Devuelve solo la jerarquía lineal
     }
     
 }

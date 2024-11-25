@@ -31,52 +31,66 @@ public class CategoriaController {
 
 	@Autowired
 	private ICategoriaService categoriaService;
-	
 
 	// Endpoint para obtener todas las categorías en forma de árbol
-    @GetMapping("/categorias")
-    public List<CategoriaDto> obtenerCategoriasEnArbol() {
-        return categoriaService.obtenerCategoriasEnArbol();
-    }
-    
- // Endpoint para obtener una categoría por su ID
-    @GetMapping("/categorias/{id}")
-    public ResponseEntity<CategoriaDto> obtenerCategoriaPorId(@PathVariable Long id) {
-        CategoriaDto categoria = categoriaService.obtenerCategoriaPorId(id);
-        return ResponseEntity.ok(categoria);
-    }
+	@GetMapping("/categorias")
+	public List<CategoriaDto> obtenerCategoriasEnArbol() {
+		return categoriaService.obtenerCategoriasEnArbol();
+	}
 
-    // Endpoint para crear una nueva categoría
-    @PostMapping("/categorias")
-    public CategoriaDto crearCategoria(@RequestBody CategoriaDto categoriaDto) {
-        return categoriaService.crearCategoria(categoriaDto);
-    }
-    
+	// Endpoint para obtener una categoría por su ID
+	@GetMapping("/categorias/{id}")
+	public ResponseEntity<CategoriaDto> obtenerCategoriaPorId(@PathVariable Long id) {
+		CategoriaDto categoria = categoriaService.obtenerCategoriaPorId(id);
+		return ResponseEntity.ok(categoria);
+	}
 
-    // Endpoint para actualizar una categoría existente
-    @PutMapping("/categorias/{id}")
-    public CategoriaDto actualizarCategoria(@PathVariable Long id, @RequestBody CategoriaDto categoriaDto) {
-        return categoriaService.actualizarCategoria(id, categoriaDto);
-    }
+	// Endpoint para crear una nueva categoría
+	@PostMapping("/categorias")
+	public CategoriaDto crearCategoria(@RequestBody CategoriaDto categoriaDto) {
+		return categoriaService.crearCategoria(categoriaDto);
+	}
 
-    // Endpoint para eliminar una categoría
-    @DeleteMapping("/categorias/{id}")
-    public void eliminarCategoria(@PathVariable Long id) {
-        categoriaService.eliminarCategoria(id);
-    }
-    
-    //Endpoint Productos por categorias
-    @GetMapping("/categorias/{idCategoria}/productos")
-    public ResponseEntity<?> obtenerProductosPorCategoria(@PathVariable Long idCategoria) {
-        try {
-            CategoriaProductoDto categoriaProductoDto = categoriaService.obtenerProductosPorCategoria(idCategoria);
-            return ResponseEntity.ok(categoriaProductoDto);
-        } catch (EntityNotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("error", "Categoría no encontrada", "idCategoria", idCategoria));
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Error inesperado", "detalle", ex.getMessage()));
-        }
-    }
+	// Endpoint para actualizar una categoría existente
+	@PutMapping("/categorias/{id}")
+	public CategoriaDto actualizarCategoria(@PathVariable Long id, @RequestBody CategoriaDto categoriaDto) {
+		return categoriaService.actualizarCategoria(id, categoriaDto);
+	}
+
+	// Endpoint para eliminar una categoría
+	@DeleteMapping("/categorias/{id}")
+	public void eliminarCategoria(@PathVariable Long id) {
+		categoriaService.eliminarCategoria(id);
+	}
+
+	// Endpoint Productos por categorias
+	@GetMapping("/categorias/{idCategoria}/productos")
+	public ResponseEntity<?> obtenerProductosPorCategoria(@PathVariable Long idCategoria) {
+		try {
+			CategoriaProductoDto categoriaProductoDto = categoriaService.obtenerProductosPorCategoria(idCategoria);
+			return ResponseEntity.ok(categoriaProductoDto);
+		} catch (EntityNotFoundException ex) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(Map.of("error", "Categoría no encontrada", "idCategoria", idCategoria));
+		} catch (Exception ex) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Map.of("error", "Error inesperado", "detalle", ex.getMessage()));
+		}
+	}
+
+	// Endpoint breadcrumb
+	@GetMapping("/categorias/breadcrumb/{idCategoria}")
+	public ResponseEntity<?> obtenerRutaPorCategoria(@PathVariable Long idCategoria) {
+	    try {
+	        // Llama al servicio que devuelve la jerarquía de categorías como una lista
+	        List<CategoriaDto> breadcrumb = categoriaService.obtenerJerarquiaPorId(idCategoria);
+	        return ResponseEntity.ok(breadcrumb);
+	    } catch (EntityNotFoundException ex) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                .body(Map.of("error", "Categoría no encontrada", "idCategoria", idCategoria));
+	    } catch (Exception ex) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body(Map.of("error", "Error inesperado", "detalle", ex.getMessage()));
+	    }
+	}
 }
