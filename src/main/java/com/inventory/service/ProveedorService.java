@@ -99,6 +99,6 @@ public class ProveedorService implements IProveedorService {
 	
 	//Total proveedores
 	public long countProveedores() {
-        return proveedorRepository.count();
+        return proveedorRepository.countByDeletedFalse();
     }
 }
